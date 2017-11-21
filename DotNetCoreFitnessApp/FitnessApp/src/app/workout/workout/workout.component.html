@@ -1,0 +1,8 @@
+<app-workout-entry *ngFor="let workout of (currentUser ? currentUser.workoutprograms : [])" class="table" [workout] = "workout">
+</app-workout-entry>
+
+<div *ngIf="currentUser != null">
+    <h2>Create new workout</h2>
+    <input class="form-control" [formControl]="workoutName"/>
+    <button class="btn btn-success" (click)="onCreateWorkout()">Create Workout</button>
+</div>
