@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Http } from '@angular/http';
 
 @Component({
@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit() {
+export class AppComponent implements OnInit {
   constructor(private _httpService: Http) { }
 
   title = 'Angular Fitness App';
