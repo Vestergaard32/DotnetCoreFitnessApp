@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using DotNetCoreFitnessApp.Models;
+using DotNetCoreFitnessApp.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -29,6 +30,11 @@ namespace DotNetCoreFitnessApp
 
             services.AddDbContext<FitnessContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("FitnessDatabase")));
+
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddOptions();
+            services.Configure<AppSettings>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
