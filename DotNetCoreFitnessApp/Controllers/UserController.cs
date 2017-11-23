@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreFitnessApp.Models;
-using DotNetCoreFitnessApp.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,16 +15,14 @@ namespace DotNetCoreFitnessApp.Controllers
     [Route("api/User")]
     public class UserController : Controller
     {
-        private readonly IUserRepository _userRepository;
         private readonly IOptions<AppSettings> _appSettings;
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public UserController(IUserRepository userRepository, IOptions<AppSettings> appSettings,
+        public UserController(IOptions<AppSettings> appSettings,
                                 UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userRepository = userRepository;
             _appSettings = appSettings;
 
             _userManager = userManager;

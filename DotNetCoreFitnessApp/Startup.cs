@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using DotNetCoreFitnessApp.Models;
-using DotNetCoreFitnessApp.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -44,8 +43,6 @@ namespace DotNetCoreFitnessApp
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             });
-
-            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddOptions();
             services.Configure<AppSettings>(Configuration);
