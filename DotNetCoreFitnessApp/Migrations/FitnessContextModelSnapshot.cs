@@ -62,16 +62,38 @@ namespace DotNetCoreFitnessApp.Migrations
 
             modelBuilder.Entity("DotNetCoreFitnessApp.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Password");
+                    b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Salt");
+                    b.Property<string>("ConcurrencyStamp");
 
-                    b.Property<string>("Username");
+                    b.Property<string>("Email");
 
-                    b.HasKey("UserId");
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
@@ -83,7 +105,7 @@ namespace DotNetCoreFitnessApp.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("WorkoutId");
 

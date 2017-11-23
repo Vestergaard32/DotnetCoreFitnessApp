@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreFitnessApp.Models;
 using DotNetCoreFitnessApp.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Newtonsoft.Json;
 
 namespace DotNetCoreFitnessApp.Controllers
 {
@@ -21,18 +19,49 @@ namespace DotNetCoreFitnessApp.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IOptions<AppSettings> _appSettings;
 
-        public UserController(IUserRepository userRepository, IOptions<AppSettings> appSettings)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+
+        public UserController(IUserRepository userRepository, IOptions<AppSettings> appSettings,
+                                UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userRepository = userRepository;
             _appSettings = appSettings;
+
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] UserRegistrationInput userRegistrationInput)
+        public async Task<IActionResult> CreateUser([FromBody] UserRegistrationInput userRegistrationInput)
         {
-            string jwtToken = GenerateJwtToken(userRegistrationInput.Username);
+            User newUser = new User
+            {
+                UserName = userRegistrationInput.Username
+            };
 
-            return Ok();
+            var userRegistrationResult = await _userManager.CreateAsync(newUser, userRegistrationInput.Password);
+            var createdUser = await _userManager.FindByNameAsync(userRegistrationInput.Username);
+
+            if (userRegistrationResult.Succeeded)
+            {
+                string jwtToken = GenerateJwtToken(userRegistrationInput.Username);
+
+                return new ObjectResult(JsonConvert.SerializeObject(new
+                {
+                    Message = "User was registered successfully",
+                    UserId = createdUser.Id,
+                    UserName = createdUser.UserName,
+                    Token = jwtToken
+                }));
+            }
+
+            foreach (var registrationErrror in userRegistrationResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty, registrationErrror.Description);
+            }
+
+            return BadRequest(ModelState);
         }
 
         private string GenerateJwtToken(string username)

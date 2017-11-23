@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using DotNetCoreFitnessApp.Models;
 using DotNetCoreFitnessApp.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -31,6 +32,19 @@ namespace DotNetCoreFitnessApp
             services.AddDbContext<FitnessContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("FitnessDatabase")));
 
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<FitnessContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            });
+
             services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddOptions();
@@ -52,8 +66,9 @@ namespace DotNetCoreFitnessApp
                 }
             });
 
+            app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
-
+            
             app.UseDefaultFiles();
             app.UseStaticFiles();
         }

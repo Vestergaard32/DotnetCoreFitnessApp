@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace DotNetCoreFitnessApp.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int UserId { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Salt { get; set; }
         public List<Workout> Workouts { get; set; }
     }
 }
