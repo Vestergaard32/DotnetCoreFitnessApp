@@ -13,6 +13,8 @@ namespace DotNetCoreFitnessApp.Models
         {
                 
         }
+        
+        public FitnessContext(){}
 
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<Exercise> Exercises { get; set; }

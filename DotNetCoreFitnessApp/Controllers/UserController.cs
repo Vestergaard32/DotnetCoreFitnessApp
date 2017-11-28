@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreFitnessApp.Models;
+using DotNetCoreFitnessApp.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -20,19 +21,25 @@ namespace DotNetCoreFitnessApp.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public UserController(IOptions<AppSettings> appSettings,
-                                UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IWorkoutRepository _workoutRepository;
+        
+        public UserController(
+            IOptions<AppSettings> appSettings,
+            UserManager<User> userManager, 
+            SignInManager<User> signInManager, 
+            IWorkoutRepository workoutRepository)
         {
             _appSettings = appSettings;
 
             _userManager = userManager;
             _signInManager = signInManager;
+            _workoutRepository = workoutRepository;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserRegistrationInput userRegistrationInput)
         {
-            User newUser = new User
+            var newUser = new User
             {
                 UserName = userRegistrationInput.Username
             };
@@ -42,7 +49,7 @@ namespace DotNetCoreFitnessApp.Controllers
 
             if (userRegistrationResult.Succeeded)
             {
-                string jwtToken = GenerateJwtToken(userRegistrationInput.Username);
+                var jwtToken = GenerateJwtToken(userRegistrationInput.Username);
 
                 return new ObjectResult(JsonConvert.SerializeObject(new
                 {
@@ -77,6 +84,19 @@ namespace DotNetCoreFitnessApp.Controllers
                 Workoutprograms = user.Workouts,
                 Token = token
             }));
+        }
+
+        [HttpDelete, Route("{userId}")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            return Ok();
+        }
+
+        [HttpPost, Route("{userId}/Workouts")]
+        public async Task<IActionResult> CreateWorkout(string userId, CreateWorkoutInputModel inputModel)
+        {
+            _workoutRepository.AddWorkout(userId, inputModel.WorkoutName);
+            return Ok();
         }
 
         private string GenerateJwtToken(string username)

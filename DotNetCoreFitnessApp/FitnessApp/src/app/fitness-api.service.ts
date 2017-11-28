@@ -12,7 +12,9 @@ import { LoginService } from './login/login.service'
 export class FitnessApiService {
   public loggedInUser : BehaviorSubject<User>;
 
-  private baseUrl = 'https://webassignment4.herokuapp.com/';
+  //private baseUrl = 'https://webassignment4.herokuapp.com/';
+  private baseUrl = 'http://localhost:5000/';
+
 
   constructor(private http: HttpClient, private loginService : LoginService)
   {
@@ -54,7 +56,7 @@ export class FitnessApiService {
     const body = {workoutName : workoutName}
     return this.http.post(userUrl, body)
       .toPromise()
-      .then((response) => 
+      .then((response) =>
         {
           var user = new User();
           user._id = response["userid"];
@@ -62,7 +64,7 @@ export class FitnessApiService {
           user.workoutprograms = response["workoutprograms"];
           this.loggedInUser.next(user);
         })
-      .catch(this.handleError); 
+      .catch(this.handleError);
   }
 
   DeleteWorkout(user : User, workoutId:string) : Promise<User>

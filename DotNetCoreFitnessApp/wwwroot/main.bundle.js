@@ -242,7 +242,8 @@ var FitnessApiService = (function () {
     function FitnessApiService(http, loginService) {
         this.http = http;
         this.loginService = loginService;
-        this.baseUrl = 'https://webassignment4.herokuapp.com/';
+        //private baseUrl = 'https://webassignment4.herokuapp.com/';
+        this.baseUrl = 'http://localhost:5000/';
         this.loggedInUser = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["BehaviorSubject"](null);
     }
     FitnessApiService.prototype.Login = function (username, password) {
