@@ -61,6 +61,24 @@ namespace DotNetCoreFitnessApp.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpPost, Route("login")]
+        public async Task<IActionResult> Login([FromBody] UserRegistrationInput loginInput)
+        {
+            var loginResult = await _signInManager.PasswordSignInAsync(loginInput.Username, loginInput.Password, false,false);
+            if (!loginResult.Succeeded) return Unauthorized();
+            var token = GenerateJwtToken(loginInput.Username);
+            var user = await _userManager.FindByNameAsync(loginInput.Username);
+            
+            return Ok(JsonConvert.SerializeObject(new
+            {
+                Message = "User has signed in",
+                UserId = user.Id,
+                Username = user.UserName,
+                Workoutprograms = user.Workouts,
+                Token = token
+            }));
+        }
+
         private string GenerateJwtToken(string username)
         {
             // The claims is the information we want our JWT to carry in its payload
