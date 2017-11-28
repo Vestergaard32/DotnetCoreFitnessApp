@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace DotNetCoreFitnessApp.Controllers
 {
-    [Route("api/User")]
+    [Route("api/Users")]
     public class UserController : Controller
     {
         private readonly IOptions<AppSettings> _appSettings;

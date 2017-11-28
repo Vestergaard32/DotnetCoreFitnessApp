@@ -48,17 +48,29 @@ module.exports = "<!--The content below is only a placeholder and can be replace
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(_httpService) {
+        this._httpService = _httpService;
         this.title = 'Angular Fitness App';
+        this.apiValues = [];
     }
+    AppComponent.prototype.ngOnInit = function () {
+        // this._httpService.get('/api/derp').subscribe(values => {
+        //   this.apiValues = values.json() as string[];
+        // });
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -66,9 +78,11 @@ AppComponent = __decorate([
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
-    })
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
 ], AppComponent);
 
+var _a;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -85,15 +99,17 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_interceptor__ = __webpack_require__("../../../../../src/app/auth-interceptor.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login_module__ = __webpack_require__("../../../../../src/app/login/login.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__workout_workout_module__ = __webpack_require__("../../../../../src/app/workout/workout.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__fitness_api_service__ = __webpack_require__("../../../../../src/app/fitness-api.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__login_login_service__ = __webpack_require__("../../../../../src/app/login/login.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__fitness_api_service__ = __webpack_require__("../../../../../src/app/fitness-api.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__login_login_service__ = __webpack_require__("../../../../../src/app/login/login.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -112,25 +128,26 @@ var AppModule = (function () {
 AppModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]
+            __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpClientModule */],
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_5__login_login_module__["a" /* LoginModule */],
             __WEBPACK_IMPORTED_MODULE_6__workout_workout_module__["a" /* WorkoutModule */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */]
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_7__angular_http__["b" /* HttpModule */]
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_8__fitness_api_service__["a" /* FitnessApiService */],
-            __WEBPACK_IMPORTED_MODULE_9__login_login_service__["a" /* LoginService */],
+            __WEBPACK_IMPORTED_MODULE_9__fitness_api_service__["a" /* FitnessApiService */],
+            __WEBPACK_IMPORTED_MODULE_10__login_login_service__["a" /* LoginService */],
             {
                 provide: __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
                 useClass: __WEBPACK_IMPORTED_MODULE_4__auth_interceptor__["a" /* AuthInterceptor */],
                 multi: true
             }
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
 
@@ -419,7 +436,8 @@ var LoginService = (function () {
     function LoginService(http) {
         this.http = http;
         this.fitnessTokenKey = "fitness-token";
-        this.baseUrl = "https://webassignment4.herokuapp.com/api/";
+        // this.baseUrl = "https://webassignment4.herokuapp.com/api/"
+        this.baseUrl = "http://localhost:5000/api/";
     }
     LoginService.prototype.saveToken = function (token) {
         window.localStorage[this.fitnessTokenKey] = token;
