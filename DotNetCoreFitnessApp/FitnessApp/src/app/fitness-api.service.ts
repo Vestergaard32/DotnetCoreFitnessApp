@@ -13,7 +13,7 @@ export class FitnessApiService {
   public loggedInUser : BehaviorSubject<User>;
 
   //private baseUrl = 'https://webassignment4.herokuapp.com/';
-  private baseUrl = 'http://localhost:63899/';
+  private baseUrl = 'http://localhost:5000/';
 
 
   constructor(private http: HttpClient, private loginService : LoginService)

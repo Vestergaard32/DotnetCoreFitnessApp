@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetCoreFitnessApp.Repositories
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class WorkoutRepository : IWorkoutRepository
     {
         private readonly FitnessContext dbContext;

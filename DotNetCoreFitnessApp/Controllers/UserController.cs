@@ -57,7 +57,7 @@ namespace DotNetCoreFitnessApp.Controllers
                     Message = "User was registered successfully",
                     userid = createdUser.Id,
                     username = createdUser.UserName,
-                    Token = jwtToken
+                    token = jwtToken
                 }));
             }
 
@@ -83,7 +83,7 @@ namespace DotNetCoreFitnessApp.Controllers
                 userid = user.Id,
                 username = user.UserName,
                 workoutprograms = user.Workouts,
-                Token = token
+                token = token
             }));
         }
 

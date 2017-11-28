@@ -240,7 +240,7 @@ var FitnessApiService = (function () {
         this.http = http;
         this.loginService = loginService;
         //private baseUrl = 'https://webassignment4.herokuapp.com/';
-        this.baseUrl = 'http://localhost:63899/';
+        this.baseUrl = 'http://localhost:5000/';
         this.loggedInUser = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["BehaviorSubject"](null);
     }
     FitnessApiService.prototype.Login = function (username, password) {
@@ -436,7 +436,7 @@ var LoginService = (function () {
         this.http = http;
         this.fitnessTokenKey = "fitness-token";
         // this.baseUrl = "https://webassignment4.herokuapp.com/api/"
-        this.baseUrl = "http://localhost:63899/api/";
+        this.baseUrl = "http://localhost:5000/api/";
     }
     LoginService.prototype.saveToken = function (token) {
         window.localStorage[this.fitnessTokenKey] = token;
@@ -497,6 +497,7 @@ var LoginService = (function () {
     LoginService.prototype.isLoggedIn = function () {
         var token = this.getToken();
         if (token) {
+            console.log("Token Payload" + token);
             var payload = JSON.parse(window.atob(token.split('.')[1]));
             return payload.exp > Date.now() / 1000;
         }
