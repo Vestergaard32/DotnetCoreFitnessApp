@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
   title = 'Angular Fitness App';
   apiValues: string[] = [];
   ngOnInit() {
-    this._httpService.get('/api/derp').subscribe(values => {
-      this.apiValues = values.json() as string[];
-    });
+    // this._httpService.get('/api/derp').subscribe(values => {
+    //   this.apiValues = values.json() as string[];
+    // });
   }
 }

@@ -10,10 +10,11 @@ export class LoginService {
   fitnessTokenKey: string;
   baseUrl: string;
 
-  constructor(private http: HttpClient) 
+  constructor(private http: HttpClient)
   {
     this.fitnessTokenKey = "fitness-token";
-    this.baseUrl = "https://webassignment4.herokuapp.com/api/"
+    // this.baseUrl = "https://webassignment4.herokuapp.com/api/"
+    this.baseUrl = "http://localhost:5000/api/";
   }
 
   private saveToken(token: string)
@@ -23,7 +24,7 @@ export class LoginService {
 
   public getToken()
   {
-    if (window.localStorage[this.fitnessTokenKey]) 
+    if (window.localStorage[this.fitnessTokenKey])
     {
       return window.localStorage[this.fitnessTokenKey];
     } else
