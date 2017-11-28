@@ -8,6 +8,7 @@ using DotNetCoreFitnessApp.Models;
 using DotNetCoreFitnessApp.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -23,18 +24,21 @@ namespace DotNetCoreFitnessApp.Controllers
         private readonly SignInManager<User> _signInManager;
 
         private readonly IWorkoutRepository _workoutRepository;
+        private readonly IExerciseRepository _exerciseRepository;
         
         public UserController(
             IOptions<AppSettings> appSettings,
             ApplicationUserManager userManager, 
             SignInManager<User> signInManager, 
-            IWorkoutRepository workoutRepository)
+            IWorkoutRepository workoutRepository, 
+            IExerciseRepository exerciseRepository)
         {
             _appSettings = appSettings;
 
             _userManager = userManager;
             _signInManager = signInManager;
             _workoutRepository = workoutRepository;
+            _exerciseRepository = exerciseRepository;
         }
 
         [HttpPost]
@@ -87,10 +91,18 @@ namespace DotNetCoreFitnessApp.Controllers
             }));
         }
 
-        [HttpDelete, Route("{userId}")]
-        public async Task<IActionResult> DeleteUser(string userId)
+        [HttpDelete, Route("{userId}/Workouts/{workoutId}")]
+        public async Task<IActionResult> DeleteWorkout(string userId, int workoutId)
         {
-            return Ok();
+            _workoutRepository.DeleteWorkout(workoutId);
+            var workouts = _workoutRepository.GetWorkoutsForUser(userId);
+            var user = await _userManager.FindByIdAsync(userId);
+            return Ok(JsonConvert.SerializeObject(new
+            {
+                userid = user.Id,
+                username = user.UserName,
+                workoutprograms = workouts
+            }));
         }
 
         [HttpPost, Route("{userId}/Workouts")]
@@ -106,6 +118,22 @@ namespace DotNetCoreFitnessApp.Controllers
                 userid = userId,
                 username = associatedUser.UserName,
                 workoutprograms = workoutPrograms
+            }));
+        }
+
+        [HttpPost, Route("{userId}/Workouts/{workoutId}/Exercises")]
+        public async Task<IActionResult> CreateExercise(string userId, int workoutId, [FromBody] Exercise newExercise)
+        {
+            _exerciseRepository.AddExercise(userId, workoutId, newExercise);
+            var associatedUser = await _userManager.FindByIdAsync(userId);
+            var workouts = _workoutRepository.GetWorkoutsForUser(userId);
+
+            
+            return Ok(JsonConvert.SerializeObject(new
+            {
+                userid = userId,
+                username = associatedUser.UserName,
+                workoutprograms = workouts
             }));
         }
 

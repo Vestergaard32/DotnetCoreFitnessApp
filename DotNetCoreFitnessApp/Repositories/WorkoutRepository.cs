@@ -26,9 +26,10 @@ namespace DotNetCoreFitnessApp.Repositories
         public IEnumerable<Workout> GetWorkoutsForUser(string userId)
         {
             var user = dbContext.Users
-                .Include(u => u.Workouts)
+                .Include(u => u.Workouts).ThenInclude(s => s.Activities)
+                .Include(u => u.Workouts).ThenInclude(s => s.Exercises)
                 .FirstOrDefault(u => u.Id == userId);
-
+           
             return user.Workouts;
         }
 
@@ -42,11 +43,11 @@ namespace DotNetCoreFitnessApp.Repositories
             dbContext.SaveChanges();
         }
 
-        public void DeleteWorkout(string workoutId)
+        public void DeleteWorkout(int workoutId)
         {
             var workout = dbContext.Workouts.Find(workoutId);
             dbContext.Workouts.Remove(workout);
             dbContext.SaveChanges();
         }
-    }
+    }    
 }
