@@ -13,7 +13,7 @@ export class FitnessApiService {
   public loggedInUser : BehaviorSubject<User>;
 
   //private baseUrl = 'https://webassignment4.herokuapp.com/';
-  private baseUrl = 'http://localhost:5000/';
+  private baseUrl = 'http://localhost:63899/';
 
 
   constructor(private http: HttpClient, private loginService : LoginService)
@@ -28,6 +28,7 @@ export class FitnessApiService {
       user._id = data["userid"];
       user.username = data["username"];
       user.workoutprograms = data["workoutprograms"];
+      console.log(user);
       this.loggedInUser.next(user);
     });
   }

@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth-interceptor'
 import { LoginModule } from './login/login.module';
 import { WorkoutModule } from './workout/workout.module';
-import {HttpModule} from "@angular/http";
+
 import { AppComponent } from './app.component';
 
 import { FitnessApiService } from './fitness-api.service'
@@ -20,7 +20,6 @@ import { LoginService } from './login/login.service'
     BrowserModule,
     LoginModule,
     WorkoutModule,
-    FormsModule,
     HttpModule
   ],
   providers: [

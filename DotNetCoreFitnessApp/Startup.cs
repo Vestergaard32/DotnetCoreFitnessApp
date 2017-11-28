@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
+using DotNetCoreFitnessApp.Managers;
 using DotNetCoreFitnessApp.Models;
 using DotNetCoreFitnessApp.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -34,7 +35,8 @@ namespace DotNetCoreFitnessApp
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<FitnessContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddUserManager<ApplicationUserManager>();
 
             services.Configure<IdentityOptions>(options =>
             {

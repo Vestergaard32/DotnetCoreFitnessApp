@@ -94,22 +94,20 @@ var _a;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_interceptor__ = __webpack_require__("../../../../../src/app/auth-interceptor.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login_module__ = __webpack_require__("../../../../../src/app/login/login.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__workout_workout_module__ = __webpack_require__("../../../../../src/app/workout/workout.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__fitness_api_service__ = __webpack_require__("../../../../../src/app/fitness-api.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__login_login_service__ = __webpack_require__("../../../../../src/app/login/login.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__fitness_api_service__ = __webpack_require__("../../../../../src/app/fitness-api.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__login_login_service__ = __webpack_require__("../../../../../src/app/login/login.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -128,26 +126,25 @@ var AppModule = (function () {
 AppModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */]
+            __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpClientModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["c" /* HttpClientModule */],
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_5__login_login_module__["a" /* LoginModule */],
             __WEBPACK_IMPORTED_MODULE_6__workout_workout_module__["a" /* WorkoutModule */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_7__angular_http__["b" /* HttpModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* HttpModule */]
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_9__fitness_api_service__["a" /* FitnessApiService */],
-            __WEBPACK_IMPORTED_MODULE_10__login_login_service__["a" /* LoginService */],
+            __WEBPACK_IMPORTED_MODULE_8__fitness_api_service__["a" /* FitnessApiService */],
+            __WEBPACK_IMPORTED_MODULE_9__login_login_service__["a" /* LoginService */],
             {
-                provide: __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
+                provide: __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
                 useClass: __WEBPACK_IMPORTED_MODULE_4__auth_interceptor__["a" /* AuthInterceptor */],
                 multi: true
             }
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */]]
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
 
@@ -243,7 +240,7 @@ var FitnessApiService = (function () {
         this.http = http;
         this.loginService = loginService;
         //private baseUrl = 'https://webassignment4.herokuapp.com/';
-        this.baseUrl = 'http://localhost:5000/';
+        this.baseUrl = 'http://localhost:63899/';
         this.loggedInUser = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["BehaviorSubject"](null);
     }
     FitnessApiService.prototype.Login = function (username, password) {
@@ -253,6 +250,7 @@ var FitnessApiService = (function () {
             user._id = data["userid"];
             user.username = data["username"];
             user.workoutprograms = data["workoutprograms"];
+            console.log(user);
             _this.loggedInUser.next(user);
         });
     };
@@ -401,7 +399,7 @@ LoginModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["a" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* ReactiveFormsModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* ReactiveFormsModule */]
         ],
         declarations: [__WEBPACK_IMPORTED_MODULE_3__login_login_component__["a" /* LoginComponent */]],
         exports: [__WEBPACK_IMPORTED_MODULE_3__login_login_component__["a" /* LoginComponent */]]
@@ -438,7 +436,7 @@ var LoginService = (function () {
         this.http = http;
         this.fitnessTokenKey = "fitness-token";
         // this.baseUrl = "https://webassignment4.herokuapp.com/api/"
-        this.baseUrl = "http://localhost:5000/api/";
+        this.baseUrl = "http://localhost:63899/api/";
     }
     LoginService.prototype.saveToken = function (token) {
         window.localStorage[this.fitnessTokenKey] = token;
@@ -741,7 +739,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/workout/workout-entry/workout-entry.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n<table style=\"margin-top: 64px !important\">\r\n    <thead>\r\n      <th colspan=\"3\">{{workout.workoutName}}\r\n        <small><span *ngIf=\"workout.activities.length > 0\">Last Activity: {{workout.activities[workout.activities.length - 1].timestamp}}</span></small>\r\n      </th>\r\n      <th>\r\n          <button class=\"btn btn-success\" [disabled]=\"!isLoggedIn()\" (click)=\"onLogWorkoutActivity(workout._id)\">Log Activity</button>        \r\n      </th>\r\n      <th>\r\n          <button class=\"btn btn-danger\" [disabled]=\"!isLoggedIn()\" (click)=\"onDeleteWorkout(workout._id)\">Delete</button>\r\n      </th>\r\n    </thead>\r\n    <thead>\r\n      <th>Name</th>\r\n      <th>Description</th>\r\n      <th>Sets</th>\r\n      <th>Reps</th>\r\n      <th>Manage</th>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let exercise of (workout.exercises ? workout.exercises : [])\">\r\n        <td>{{exercise.exerciseName}}</td>\r\n        <td>{{exercise.description}}</td>\r\n        <td>{{exercise.sets}}</td>\r\n        <td>{{exercise.reps}}</td>\r\n        <td>\r\n          <button class=\"btn btn-danger\" [disabled]=\"!isLoggedIn()\" (click)=\"onDeleteExercise(workout._id, exercise._id)\">Delete Exercise</button>\r\n        </td>\r\n      </tr>\r\n      <tr>\r\n        <td><input class=\"form-control\" [formControl]=\"exerciseName\"/></td>\r\n        <td><input class=\"form-control\" [formControl]=\"exerciseDescription\" /></td>\r\n        <td><input class=\"form-control\" [formControl]=\"exerciseSets\" /></td>\r\n        <td><input class=\"form-control\" [formControl]=\"exerciseReps\" /></td>\r\n        <td>\r\n          <button class=\"btn btn-success\" [disabled]=\"!isLoggedIn()\" (click)=\"onCreateExercise(workout._id)\">Create Exercise</button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>"
+module.exports = "<div ng-if=\"!workout\">\r\n  <div class=\"row\">\r\n    <table style=\"margin-top: 64px !important\">\r\n      <thead>\r\n        <th colspan=\"3\">{{workout?.workoutName}}\r\n          <small><span *ngIf=\"workout.activities.length > 0\">Last Activity: {{workout.activities[workout.activities.length - 1].timestamp}}</span></small>\r\n        </th>\r\n        <th>\r\n          <button class=\"btn btn-success\" [disabled]=\"!isLoggedIn()\" (click)=\"onLogWorkoutActivity(workout._id)\">Log Activity</button>        \r\n        </th>\r\n        <th>\r\n          <button class=\"btn btn-danger\" [disabled]=\"!isLoggedIn()\" (click)=\"onDeleteWorkout(workout._id)\">Delete</button>\r\n        </th>\r\n      </thead>\r\n      <thead>\r\n        <th>Name</th>\r\n        <th>Description</th>\r\n        <th>Sets</th>\r\n        <th>Reps</th>\r\n        <th>Manage</th>\r\n      </thead>\r\n      <tbody>\r\n        <tr *ngFor=\"let exercise of (workout.exercises ? workout.exercises : [])\">\r\n          <td>{{exercise.exerciseName}}</td>\r\n          <td>{{exercise.description}}</td>\r\n          <td>{{exercise.sets}}</td>\r\n          <td>{{exercise.reps}}</td>\r\n          <td>\r\n            <button class=\"btn btn-danger\" [disabled]=\"!isLoggedIn()\" (click)=\"onDeleteExercise(workout._id, exercise._id)\">Delete Exercise</button>\r\n          </td>\r\n        </tr>\r\n        <tr>\r\n          <td><input class=\"form-control\" [formControl]=\"exerciseName\"/></td>\r\n          <td><input class=\"form-control\" [formControl]=\"exerciseDescription\" /></td>\r\n          <td><input class=\"form-control\" [formControl]=\"exerciseSets\" /></td>\r\n          <td><input class=\"form-control\" [formControl]=\"exerciseReps\" /></td>\r\n          <td>\r\n            <button class=\"btn btn-success\" [disabled]=\"!isLoggedIn()\" (click)=\"onCreateExercise(workout._id)\">Create Exercise</button>\r\n          </td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n  </div>\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -860,7 +858,7 @@ WorkoutModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["a" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* ReactiveFormsModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* ReactiveFormsModule */]
         ],
         declarations: [__WEBPACK_IMPORTED_MODULE_3__workout_workout_component__["a" /* WorkoutComponent */], __WEBPACK_IMPORTED_MODULE_4__workout_entry_workout_entry_component__["a" /* WorkoutEntryComponent */], __WEBPACK_IMPORTED_MODULE_5__allworkouts_allworkouts_component__["a" /* AllworkoutsComponent */]],
         exports: [

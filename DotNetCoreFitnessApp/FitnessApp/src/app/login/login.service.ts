@@ -14,7 +14,7 @@ export class LoginService {
   {
     this.fitnessTokenKey = "fitness-token";
     // this.baseUrl = "https://webassignment4.herokuapp.com/api/"
-    this.baseUrl = "http://localhost:5000/api/";
+    this.baseUrl = "http://localhost:63899/api/";
   }
 
   private saveToken(token: string)

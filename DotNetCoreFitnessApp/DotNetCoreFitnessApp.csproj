@@ -4,6 +4,9 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <DefaultItemExcludes>FitnessApp/node_modules/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>

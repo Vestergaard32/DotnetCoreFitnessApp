@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using DotNetCoreFitnessApp.Managers;
 using DotNetCoreFitnessApp.Models;
 using DotNetCoreFitnessApp.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +26,7 @@ namespace DotNetCoreFitnessApp.Controllers
         
         public UserController(
             IOptions<AppSettings> appSettings,
-            UserManager<User> userManager, 
+            ApplicationUserManager userManager, 
             SignInManager<User> signInManager, 
             IWorkoutRepository workoutRepository)
         {
@@ -54,8 +55,8 @@ namespace DotNetCoreFitnessApp.Controllers
                 return new ObjectResult(JsonConvert.SerializeObject(new
                 {
                     Message = "User was registered successfully",
-                    UserId = createdUser.Id,
-                    UserName = createdUser.UserName,
+                    userid = createdUser.Id,
+                    username = createdUser.UserName,
                     Token = jwtToken
                 }));
             }
@@ -79,9 +80,9 @@ namespace DotNetCoreFitnessApp.Controllers
             return Ok(JsonConvert.SerializeObject(new
             {
                 Message = "User has signed in",
-                UserId = user.Id,
-                Username = user.UserName,
-                Workoutprograms = user.Workouts,
+                userid = user.Id,
+                username = user.UserName,
+                workoutprograms = user.Workouts,
                 Token = token
             }));
         }
@@ -93,10 +94,19 @@ namespace DotNetCoreFitnessApp.Controllers
         }
 
         [HttpPost, Route("{userId}/Workouts")]
-        public async Task<IActionResult> CreateWorkout(string userId, CreateWorkoutInputModel inputModel)
+        public async Task<IActionResult> CreateWorkout(string userId, [FromBody]CreateWorkoutInputModel inputModel)
         {
             _workoutRepository.AddWorkout(userId, inputModel.WorkoutName);
-            return Ok();
+
+            var workoutPrograms = _workoutRepository.GetWorkoutsForUser(userId);
+            var associatedUser = await _userManager.FindByIdAsync(userId);
+
+            return Ok(JsonConvert.SerializeObject(new
+            {
+                userid = userId,
+                username = associatedUser.UserName,
+                workoutprograms = workoutPrograms
+            }));
         }
 
         private string GenerateJwtToken(string username)
