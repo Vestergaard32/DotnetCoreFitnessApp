@@ -497,7 +497,6 @@ var LoginService = (function () {
     LoginService.prototype.isLoggedIn = function () {
         var token = this.getToken();
         if (token) {
-            console.log("Token Payload" + token);
             var payload = JSON.parse(window.atob(token.split('.')[1]));
             return payload.exp > Date.now() / 1000;
         }

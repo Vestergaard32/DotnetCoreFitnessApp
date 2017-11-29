@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DotNetCoreFitnessApp.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,14 @@ namespace DotNetCoreFitnessApp.Repositories
             var workout = user.Workouts.FirstOrDefault(workout1 => workout1.WorkoutId == workoutId);
             workout?.Exercises.Add(exercise);
 
+            _dbContext.SaveChanges();
+        }
+
+        public void RemoveExercise(string exerciseId)
+        {
+            Exercise exerciseToDelete = new Exercise {ExerciseId = Int32.Parse(exerciseId)};
+
+            _dbContext.Exercises.Remove(exerciseToDelete);
             _dbContext.SaveChanges();
         }
     }

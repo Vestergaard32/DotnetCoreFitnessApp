@@ -94,7 +94,7 @@ namespace DotNetCoreFitnessApp.Controllers
         [HttpDelete, Route("{userId}/Workouts/{workoutId}")]
         public async Task<IActionResult> DeleteWorkout(string userId, int workoutId)
         {
-            _workoutRepository.DeleteWorkout(workoutId);
+            _workoutRepository.DeleteWorkout(userId, workoutId);
             var workouts = _workoutRepository.GetWorkoutsForUser(userId);
             var user = await _userManager.FindByIdAsync(userId);
             return Ok(JsonConvert.SerializeObject(new
@@ -127,8 +127,38 @@ namespace DotNetCoreFitnessApp.Controllers
             _exerciseRepository.AddExercise(userId, workoutId, newExercise);
             var associatedUser = await _userManager.FindByIdAsync(userId);
             var workouts = _workoutRepository.GetWorkoutsForUser(userId);
-
             
+            return Ok(JsonConvert.SerializeObject(new
+            {
+                userid = userId,
+                username = associatedUser.UserName,
+                workoutprograms = workouts
+            }));
+        }
+
+        [HttpDelete, Route("{userId}/Workouts/{workoutId}/Exercises/{exerciseId}")]
+        public async Task<IActionResult> RemoveExercise(string userId, int workoutId, string exerciseId)
+        {
+            _exerciseRepository.RemoveExercise(exerciseId);
+            var associatedUser = await _userManager.FindByIdAsync(userId);
+            var workouts = _workoutRepository.GetWorkoutsForUser(userId);
+
+            return Ok(JsonConvert.SerializeObject(new
+            {
+                userid = userId,
+                username = associatedUser.UserName,
+                workoutprograms = workouts
+            }));
+        }
+
+        [HttpPost, Route("{userId}/Workouts/{workoutId}/workoutActivities")]
+        public async Task<IActionResult> LogActivity(string userId, int workoutId)
+        {
+            _workoutRepository.LogActivity(userId, workoutId);
+
+            var associatedUser = await _userManager.FindByIdAsync(userId);
+            var workouts = _workoutRepository.GetWorkoutsForUser(userId);
+
             return Ok(JsonConvert.SerializeObject(new
             {
                 userid = userId,

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using DotNetCoreFitnessApp.Repositories;
+﻿using DotNetCoreFitnessApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetCoreFitnessApp.Controllers

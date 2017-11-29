@@ -17,7 +17,11 @@ namespace DotNetCoreFitnessApp.Managers
 
         public override Task<User> FindByNameAsync(string name)
         {
-            return Users.Include(user => user.Workouts).FirstOrDefaultAsync(user => user.UserName == name);
+            return Users.Include(user => user.Workouts)
+                        .ThenInclude(x => x.Exercises)
+                        .Include(x => x.Workouts)
+                        .ThenInclude(x => x.Activities)
+                        .FirstOrDefaultAsync(user => user.UserName == name);
         }
     }
 }

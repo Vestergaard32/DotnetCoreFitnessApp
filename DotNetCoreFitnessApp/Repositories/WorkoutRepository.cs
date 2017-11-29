@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DotNetCoreFitnessApp.Models;
 using Microsoft.EntityFrameworkCore;
@@ -43,10 +44,31 @@ namespace DotNetCoreFitnessApp.Repositories
             dbContext.SaveChanges();
         }
 
-        public void DeleteWorkout(int workoutId)
+        public void DeleteWorkout(string userId, int workoutId)
         {
-            var workout = dbContext.Workouts.Find(workoutId);
-            dbContext.Workouts.Remove(workout);
+            var user = dbContext.Users
+                .Include(u => u.Workouts)
+                .FirstOrDefault(u => u.Id == userId);
+
+            var workout = user.Workouts.FirstOrDefault(x => x.WorkoutId == workoutId);
+
+            user.Workouts.Remove(workout);
+
+            dbContext.SaveChanges();
+        }
+
+        public void LogActivity(string userId, int workoutId)
+        {
+            var workout = dbContext.Workouts.Where(x => x.WorkoutId == workoutId)
+                                            .Include(a => a.Activities)
+                                            .FirstOrDefault();
+
+            workout.Activities.Add(new Activity
+            {
+                Description = "Workout Completed",
+                TimeStamp = DateTime.Now
+            });
+
             dbContext.SaveChanges();
         }
     }    

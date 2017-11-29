@@ -8,6 +8,7 @@ namespace DotNetCoreFitnessApp.Repositories
         IEnumerable<Workout> GetAllWorkouts();
         IEnumerable<Workout> GetWorkoutsForUser(string userId);
         void AddWorkout(string userId, string workoutName);
-        void DeleteWorkout(int workoutId);
+        void DeleteWorkout(string userId, int workoutId);
+        void LogActivity(string userId, int workoutId);
     }
 }
