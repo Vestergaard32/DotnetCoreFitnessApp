@@ -6,6 +6,7 @@ using DotNetCoreFitnessApp.Managers;
 using DotNetCoreFitnessApp.Models;
 using DotNetCoreFitnessApp.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -51,6 +52,9 @@ namespace DotNetCoreFitnessApp
             services.Configure<AppSettings>(Configuration);
             services.AddScoped<IWorkoutRepository, WorkoutRepository>();
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
+
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
+            services.AddResponseCompression();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +72,8 @@ namespace DotNetCoreFitnessApp
                 }
             });
 
+            app.UseResponseCompression();
+            
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
             
